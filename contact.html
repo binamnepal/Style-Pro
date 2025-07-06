@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Contact – Style Pro</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="Get in touch with Style Pro for support, feedback, or inquiries.">
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="contact.css" />
+  <style>
+   
+  </style>
+</head>
+<body>
+  <header>
+    <nav class="container" role="navigation" aria-label="Main Navigation">
+      <div class="logo" aria-label="Style Pro logo">Style Pro</div>
+      <div class="nav-links">
+        <a href="index.html" tabindex="0">Home</a>
+        <a href="">insta</a>
+        <a href="">Facebook</a>
+        <a href="">Twitter</a>
+      </div>
+      <div class="theme-toggle">
+        <label class="switch">
+          <input type="checkbox" id="toggle-theme">
+          <span class="slider round"></span>
+        </label>
+      </div>
+    </nav>
+  </header>
+
+  <main class="container contact-section">
+    <h1>Contact Us</h1>
+    <p>Have a question or feedback? We'd love to hear from you. Fill out the form below and our team will get back to you shortly.</p>
+
+    <form action="#" method="POST">
+      <input type="text" name="name" placeholder="Your Name" required />
+      <input type="email" name="email" placeholder="Your Email" required />
+      <textarea name="message" rows="5" placeholder="Your Message" required></textarea>
+      <button type="submit">Send Message</button>
+    </form>
+  </main>
+
+  <footer id="contact" aria-label="Contact Footer">
+    <p>© 2024 Style Pro. All rights reserved.</p>
+  </footer>
+
+  <script>
+    // Dark/Light Mode Toggle
+    const toggle = document.getElementById('toggle-theme');
+    toggle.addEventListener('change', () => {
+      document.body.classList.toggle('dark-mode');
+    });
+  </script>
+</body>
+</html>

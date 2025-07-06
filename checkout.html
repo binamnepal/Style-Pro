@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Checkout – Style Pro</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+   <link rel="stylesheet" href="checkout css.css">
+  <style>
+ 
+  </style>
+</head>
+<body>
+  <div class="checkout-container">
+  <h1>Checkout</h1>
+  <p>Please review your order details below and fill in your information to complete the purchase.</p>
+
+  <div class="order-summary" id="order-summary"></div>
+
+  <a href="add to cart .html" class="back-btn">← Back to Cart</a>
+  </form>
+</div>
+
+<style>
+  .checkout-container {
+    max-width: 600px;
+    margin: 2rem auto;
+    padding: 2rem;
+    background: #fff;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    border-radius: 8px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    color: #333;
+  }
+
+  .checkout-container h1 {
+    font-size: 2.5rem;
+    margin-bottom: 0.25rem;
+    color: #222;
+  }
+
+  .checkout-container p {
+    font-size: 1.1rem;
+    color: #555;
+    margin-bottom: 1.5rem;
+  }
+
+  .order-summary {
+    border: 1px solid #ddd;
+    padding: 1rem 1.5rem;
+    border-radius: 6px;
+    margin-bottom: 1.75rem;
+    background: #fafafa;
+    min-height: 100px;
+  }
+
+  .back-btn {
+    display: inline-block;
+    margin-bottom: 1.5rem;
+    text-decoration: none;
+    color: #555;
+    font-weight: 600;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    border: 1.5px solid #aaa;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+  }
+
+  .back-btn:hover,
+  .back-btn:focus {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+    outline: none;
+  }
+
+</style>
+
+<form id="checkout-form">
+  <label for="name">Full Name</label>
+  <input type="text" id="name" required />
+
+  <label for="phone">Phone Number</label>
+  <input type="tel" id="phone" required />
+
+  <label for="address">Delivery Address</label>
+  <textarea id="address" rows="4" required></textarea>
+
+  <label for="payment">Payment Method</label>
+  <select id="payment" disabled>
+    <option>Cash on Delivery</option>
+  </select>
+
+  <button type="submit" class="submit-btn">Place Order</button>
+</form>
+
+
+  <script>
+    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const orderSummary = document.getElementById("order-summary");
+
+    let total = 0;
+    if (cart.length === 0) {
+      orderSummary.innerHTML = "<p>Your cart is empty.</p>";
+    } else {
+      cart.forEach(item => {
+        const itemDiv = document.createElement("div");
+        itemDiv.textContent = `${item.name} x ${item.qty} = $${(item.price * item.qty).toFixed(2)}`;
+        orderSummary.appendChild(itemDiv);
+        total += item.price * item.qty;
+      });
+
+      const totalP = document.createElement("p");
+      totalP.style.marginTop = "1rem";
+      totalP.innerHTML = `<strong>Total: $${total.toFixed(2)}</strong>`;
+      orderSummary.appendChild(totalP);
+    }   
+  document.getElementById("checkout-form").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    alert("✅ Thank you for your purchase!\n\nYour order has been placed successfully. You will pay cash on delivery.");
+
+    localStorage.removeItem("cart");
+
+    window.location.href = "Front Page.html"; // Make sure this file exists and has the right name
+  });
+  </script>
+</body>
+</html>

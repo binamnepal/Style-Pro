@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Shopping Cart – Style Pro</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css">
+   <link rel="stylesheet" href="add to cart .css">
+  <style>
+  
+  </style>
+</head>
+<body>
+<nav class="container" role="navigation" aria-label="Main Navigation">
+      <div class="logo" aria-label="Style Pro logo">Style Pro</div>
+      <div class="nav-links">
+        <a href="index.html">Home</a>
+
+        <a href="Shop.html">Shop</a>
+      </div>
+      <div class="theme-toggle">
+        <label class="switch">
+          <input type="checkbox" id="toggle-theme">
+          <span class="slider round"></span>
+        </label>
+      </div>
+    </nav>
+  </header>
+  <main class="cart-section">
+    <h1>Your Shopping Cart</h1>
+    <div id="cart-list"></div>
+
+   <div class="cart-summary">
+  <p id="cart-total">Total: $0.00</p>
+  <button class="checkout-btn" onclick="location.href='checkout.html'">Proceed to Checkout</button>
+</div>
+
+    <div class="empty-cart" id="empty-cart" style="display: none;">
+      <p>Your cart is empty.</p>
+      <a href="Shop.html" class="shop-link">Continue Shopping</a>
+    </div>
+  </main>
+
+  <script>
+    const cartList = document.getElementById('cart-list');
+    const cartTotal = document.getElementById('cart-total');
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    function saveCart() {
+      localStorage.setItem('cart', JSON.stringify(cart));
+    }
+
+    function updateCartUI() {
+      cartList.innerHTML = '';
+      let total = 0;
+
+      cart.forEach((item, index) => {
+        const div = document.createElement('div');
+        div.className = 'cart-item';
+
+        div.innerHTML = `
+          <div>
+            <h3>${item.name}</h3>
+            <p>$${(item.price * item.qty).toFixed(2)}</p>
+          </div>
+          <div class="qty-controls">
+            <button onclick="changeQty(${index}, -1)">−</button>
+            <span>${item.qty}</span>
+            <button onclick="changeQty(${index}, 1)">+</button>
+            <button class="remove-btn" onclick="removeItem(${index})">Remove</button>
+          </div>
+        `;
+
+        cartList.appendChild(div);
+        total += item.price * item.qty;
+      });
+
+      cartTotal.textContent = `Total: $${total.toFixed(2)}`;
+    }
+
+    function changeQty(index, delta) {
+      cart[index].qty += delta;
+      if (cart[index].qty <= 0) {
+        cart.splice(index, 1);
+      }
+      saveCart();
+      updateCartUI();
+    }
+
+    function removeItem(index) {
+      cart.splice(index, 1);
+      saveCart();
+      updateCartUI();
+    }
+
+    updateCartUI();
+  </script>
+
+</body>
+</html>

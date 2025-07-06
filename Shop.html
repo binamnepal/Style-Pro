@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Shop – Style Pro</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <link rel="stylesheet" href="style.css" />
+  <style>
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="logo">Style Pro</div>
+    <div class="nav-links">
+      <a href="index.html">Home</a>
+      <a href="contact.html">Contact</a>
+    </div>
+    <div class="cart-icon" id="cart-icon" aria-label="Shopping cart" role="button" tabindex="0">
+      🛒 <span class="cart-count" id="cart-count">0</span>
+      <div class="cart-popup" id="cart-popup">
+        <div id="cart-items"></div>
+        <a href="add to cart .html" class="checkout-btn">Go to Cart</a>
+      </div>
+    </div>
+  </nav>
+
+  <main>
+    <div class="product-grid">
+      <div class="product-card" data-name="Denim Jacket" data-price="59.99">
+        <img src="classic denim jacket.png" alt="Denim Jacket" />
+        <div class="product-name">Denim Jacket</div>
+        <div class="product-price">$59.99</div>
+        <button class="add-btn">Add to Cart</button>
+      </div>
+
+      <div class="product-card" data-name="T-shirt" data-price="59.99">
+        <img src="t-shirt.png" alt="T-shirt" />
+        <div class="product-name">T-shirt</div>
+        <div class="product-price">$59.99</div>
+        <button class="add-btn">Add to Cart</button>
+      </div>
+
+      <div class="product-card" data-name="Summer Dress" data-price="39.99">
+        <img src="summer dress.jpeg" alt="Summer Dress" />
+        <div class="product-name">Summer Dress</div>
+        <div class="product-price">$39.99</div>
+        <button class="add-btn">Add to Cart</button>
+      </div>
+
+      <div class="product-card" data-name="Sneakers" data-price="49.99">
+        <img src="snecker.png" alt="Sneakers" />
+        <div class="product-name">Sneakers</div>
+        <div class="product-price">$49.99</div>
+        <button class="add-btn">Add to Cart</button>
+      </div>
+
+      <div class="product-card" data-name="Shirt" data-price="29.99">
+        <img src="shirt.jpeg" alt="Shirt" />
+        <div class="product-name">Shirt</div>
+        <div class="product-price">$29.99</div>
+        <button class="add-btn">Add to Cart</button>
+      </div>
+    </div>
+  </main>
+
+  <script>
+    const cartIcon = document.getElementById('cart-icon');
+    const cartPopup = document.getElementById('cart-popup');
+    const cartCount = document.getElementById('cart-count');
+    const cartItems = document.getElementById('cart-items');
+
+    let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+    document.querySelectorAll('.add-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const card = btn.closest('.product-card');
+        const name = card.dataset.name;
+        const price = parseFloat(card.dataset.price);
+
+        const existing = cart.find(item => item.name === name);
+        if (existing) {
+          existing.qty += 1;
+        } else {
+          cart.push({ name, price, qty: 1 });
+        }
+
+        localStorage.setItem('cart', JSON.stringify(cart));
+        updateCartUI();
+      });
+    });
+
+    cartIcon.addEventListener('click', () => {
+      cartPopup.style.display = cartPopup.style.display === 'block' ? 'none' : 'block';
+    });
+
+    function updateCartUI() {
+      cartCount.textContent = cart.reduce((sum, item) => sum + item.qty, 0);
+      cartItems.innerHTML = '';
+      cart.forEach(item => {
+        const p = document.createElement('p');
+        p.textContent = `${item.name} x ${item.qty} - $${(item.price * item.qty).toFixed(2)}`;
+        cartItems.appendChild(p);
+      });
+    }
+
+    updateCartUI();
+
+    window.addEventListener('click', e => {
+      if (!cartIcon.contains(e.target) && !cartPopup.contains(e.target)) {
+        cartPopup.style.display = 'none';
+      }
+    });
+  </script>
+</body>
+</html>
